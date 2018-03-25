@@ -8,8 +8,8 @@ using namespace std;
 Table_ident TID;
 void check_scan();
 int main(int argc, char **argv)
-{/*
-    Interpretator interpretator("/home/nate/qtcompiler/file.txt");
+{
+    Interpretator interpretator(argv[1]);
     try {
         interpretator.interpretation();
     }
@@ -24,13 +24,13 @@ int main(int argc, char **argv)
     }
     catch (char c){
         cout << "char error = " << c << endl;
-    }*/
-    check_scan();
+    }
+    //check_scan();
     return 0;
 }
 
 void check_scan() {
-    Scanner scan("/home/nate/qtcompiler/file.txt");
+    Scanner scan("/home/nate/nate/qtcompiler/file.txt");
     try {
         while (1) {
             Lex t = scan.gl();
