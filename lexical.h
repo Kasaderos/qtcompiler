@@ -51,7 +51,7 @@ class Scanner
     ifstream fp;
     string buf;
 public:
-    char c, c2;
+    char c;
     char minus;
     static type_lex tw[];
     static type_lex td[];

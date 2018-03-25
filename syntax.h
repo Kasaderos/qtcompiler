@@ -1,5 +1,6 @@
 #ifndef SYNTAX_H
 #define SYNTAX_H
+#include "lexical.h"
 
 template <class T, int max_size > class Stack
 {
@@ -17,7 +18,6 @@ public:
     bool is_full();
     void print();
 };
-
 
 class Poliz {
     Lex *p;
@@ -44,10 +44,9 @@ class Parser {
     Stack < int, 100 > st_int;
     Stack < Lex, 100 > st_lex;
     void P();
-        void D();
-        void D1();
+    void D();
+    void D1();
     void B();
-    void Stmts();
     void S();
     void E();
     void E1();
@@ -77,7 +76,7 @@ class Interpretator {
     Parser pars;
     Executer E;
 public:
-    Interpretator(const char * program) : pars(program) {};
+    Interpretator(char * program) : pars(program) {};
     void interpretation();
 };
 

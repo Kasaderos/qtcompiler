@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += main.cpp \
     twd.cpp \
     lexical.cpp \
-    syntax.cpp
+    syntax.cpp \
+    executer.cpp
 
 HEADERS += \
     lexical.h \

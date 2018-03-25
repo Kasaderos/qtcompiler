@@ -51,7 +51,7 @@ enum type_lex {
     D     -> D1 {;D1}
     D1    -> [int | float] id {,id}
     B     -> { S{;S} }
-    S     -> I = E |
+    S     -> I = E | if E B else B | while E B | print(E)
     E     -> E1 [=|<|>|!=] E1 | E1
     E1    -> T {[+|-|or] T}
     T     -> F {[*|/|and] F}

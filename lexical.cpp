@@ -86,8 +86,6 @@ ostream & operator << (ostream & s, Lex lx) {
     return s;
 }
 
-
-
 Scanner::Scanner(const char *filename)
 {
     fp.open(filename);
@@ -96,7 +94,6 @@ Scanner::Scanner(const char *filename)
         exit(1);
     }
     ST = H;
-    fp.get(c2);
     gc();
 }
 
@@ -106,8 +103,7 @@ Scanner::~Scanner()
 }
 
 void Scanner::gc() {
-    c = c2;
-    fp.get(c2);
+    fp.get(c);
 }
 
 int Scanner::lookTW() {
@@ -162,6 +158,7 @@ Lex Scanner::gl()
                 ST = DELIM;
             break;
         case IDENT:
+            minus = 0;
             if (isalpha(c) || isdigit(c)) {
                 add();
                 gc();
@@ -178,6 +175,7 @@ Lex Scanner::gl()
             }
             break;
         case NUM:
+            minus = 0;
             if (isdigit(c)) {
                 add();
                 gc();
@@ -195,6 +193,13 @@ Lex Scanner::gl()
         case DELIM:
             add();
             if ((j = lookTD()) != 0) {
+                if (c == '=' || c == '(')
+                    minus = 1;
+                if (c == '-' && minus){
+                    ST = NUM;
+                    gc();
+                    break;
+                }
                 gc();
                 return Lex(td[j], j);
             }
