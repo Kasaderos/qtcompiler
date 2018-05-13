@@ -1,4 +1,16 @@
-int a, b;
+int a, b, s;
 {
-
+    input(a);
+    input(b);
+    while ((a != 0) and (b != 0)) {
+        if (a > b) {
+            a = a % b;
+            print(a);
+        }else{
+            b = b % a;
+            print(b);
+        }
+    }
+    s = a + b;
+    print(s);
 }

@@ -8,6 +8,7 @@ type_lex Scanner::td[] = {
     LEX_MINUS,
     LEX_MUL,
     LEX_DIV,
+    LEX_MOD,
     LEX_LPAREN,
     LEX_RPAREN,
     LEX_COLON,
@@ -53,6 +54,7 @@ const string Scanner::TD[] = {
     "-",
     "*",
     "/",
+    "%",
     "(",
     ")",
     ":",
@@ -110,6 +112,7 @@ const string Scanner::LEXS[] = {
     "LEX_MINUS",
     "LEX_MUL",
     "LEX_DIV",
+    "LEX_MOD",
     "LEX_LPAREN", // )
     "LEX_RPAREN", // )
     "LEX_LSQR", // [

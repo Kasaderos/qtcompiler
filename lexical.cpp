@@ -84,6 +84,12 @@ Lex operator / (const Lex & a, const Lex & b){
     return (int)lex1.get_val() / (int)lex2.get_val();
 }
 
+Lex operator % (const Lex & a, const Lex & b){
+    Lex lex1 = to_const(a);
+    Lex lex2 = to_const(b);
+    return (int)lex1.get_val() % (int)lex2.get_val();
+}
+
 ostream & operator << (ostream & s, Lex lx) {
     s << '(' << Scanner::LEXS[lx.get_type()] << ',';
     s << (lx.get_type() == LEX_FNUM ? lx.get_val() : (int)lx.get_val()) << ')';

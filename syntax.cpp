@@ -37,13 +37,13 @@ void Parser::gl() {
     curr_l = scan.gl();
     curr_t = curr_l.get_type();
     curr_v = curr_l.get_val();
-    cout << curr_l << endl;
+    //cout << curr_l << endl;
 }
 void Parser::analyze() {
-    cout << "starting analyze: " << endl;
+    //cout << "starting analyze: " << endl;
     P();
-    prog.print();
-    cout << endl << "Parser success" << endl;
+    //prog.print();
+    //cout << endl << "Parser success" << endl;
 }
 
 void Parser::P() {
@@ -145,6 +145,8 @@ void Parser::S() {
             S();
             prog.put_lex(Lex(POLIZ_LABEL,prog.get_pos()),pl3);
         }
+        gl();
+        S();
     } //end if
     else if ( curr_t == LEX_WHILE ){
         int pl0 = prog.get_pos();
@@ -211,7 +213,8 @@ void Parser::E1() {
 
 void Parser::T() {
     F();
-    while (curr_t == LEX_MUL || curr_t == LEX_DIV || curr_t == LEX_AND) {
+    while (curr_t == LEX_MUL || curr_t == LEX_DIV || curr_t == LEX_AND
+                                            || curr_t == LEX_MOD) {
         st_lex.push(curr_l);
         gl();
         F();
@@ -243,7 +246,7 @@ void Parser::F() {
     else if (curr_t == LEX_NOT) {
         gl();
         F();
-        //check_not();
+        check_not();
     }
     else if (curr_t == LEX_LPAREN) {
         gl();
@@ -271,7 +274,7 @@ void Parser::dec()
         {
             TID.var[i].declare = true;
             TID.var[i].set_type(type); //type_var
-            cout << "declared : " << TID.var[i].name << endl;
+            //cout << "declared : " << TID.var[i].name << endl;
         }
     }
 }
@@ -287,7 +290,7 @@ void Parser::check_id()
 
 void Parser::eq_type()
 {
-    st_lex.print();
+    //st_lex.print();
     Lex t1 = st_lex.pop();
     Lex t2 = st_lex.pop();
     if (t1.get_type() == LEX_FLOAT && t2.get_type() == LEX_INT)
@@ -308,11 +311,17 @@ void Parser::check_op()
             st_lex.push(LEX_FLOAT);
         else
             st_lex.push(LEX_INT);
+    }else if (oper == LEX_MOD){
+        if (t1.get_type() == LEX_FLOAT || t2.get_type() == LEX_FLOAT)
+            throw "oper MOD : float type";
+        st_lex.push(LEX_INT);
     }else if (oper == LEX_OR || oper == LEX_AND ||
               oper == LEX_SG || oper == LEX_SL || oper == LEX_SGE ||
-              oper == LEX_SLE || oper == LEX_SEQ || oper == LEX_SNQ)
+              oper == LEX_SLE || oper == LEX_SEQ || oper == LEX_SNQ){
+        if (t1.get_type() == LEX_FLOAT || t2.get_type() == LEX_FLOAT)
+            throw "oper >,<,>=,<=, !=, == : float type";
         st_lex.push(LEX_BOOL);
-    else
+    }else
         throw "wrong types are in operation";
      prog.put_lex(op);
 }

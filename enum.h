@@ -20,6 +20,7 @@ enum type_lex {
     LEX_MINUS,
     LEX_MUL,
     LEX_DIV,
+    LEX_MOD,
     LEX_LPAREN, // )
     LEX_RPAREN, // )
     LEX_LSQR, // [

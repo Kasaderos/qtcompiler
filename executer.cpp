@@ -6,7 +6,7 @@ extern Table_ident TID;
 void Interpretator::interpretation()
 {
     pars.analyze();
-    cout << "Start execute: " << endl;
+    //cout << "Start execute: " << endl;
     E.execute(pars.prog);
 }
 
@@ -53,6 +53,12 @@ void Executer::execute(Poliz & prog) {
             lex1 = to_const(lex1);
             if (lex1.get_val() == 0) throw "error division by zero";
             args.push(args.pop() / lex1);
+            break;
+        case LEX_MOD:
+            lex1 = args.pop();
+            lex1 = to_const(lex1);
+            if (lex1.get_val() == 0) throw "error division by zero";
+            args.push(args.pop() % lex1);
             break;
         case LEX_ASSIGN:
             lex1 = args.pop();

@@ -25,6 +25,7 @@ public:
     friend Lex operator - (const Lex & a, const Lex & b);
     friend Lex operator * (const Lex & a, const Lex & b);
     friend Lex operator / (const Lex & a, const Lex & b);
+    friend Lex operator % (const Lex & a, const Lex & b);
 };
 
 Lex to_const(const Lex & a);
