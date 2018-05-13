@@ -41,6 +41,9 @@ enum type_lex {
     LEX_SL, // <
     LEX_SGE, // >=
     LEX_SLE, // <=
+    LEX_SIN,
+    LEX_COS,
+    LEX_LOG,
     POLIZ_GO,
     POLIZ_FGO,
     POLIZ_LABEL,
@@ -56,7 +59,7 @@ enum type_lex {
     E     -> E1 [=|<|>|!=] E1 | E1
     E1    -> T {[+|-|or] T}
     T     -> F {[*|/|and] F}
-    F     -> I | N | L | not F | (E)
+    F     -> I | N | L | not F | (E) | sin
     L     -> true | false
     I     -> C | IC | IR
     N     -> R | NR

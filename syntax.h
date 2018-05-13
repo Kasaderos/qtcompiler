@@ -32,7 +32,6 @@ public:
     int get_pos();
     Lex & operator[] (int index);
     void print();
-
 };
 
 class Parser {

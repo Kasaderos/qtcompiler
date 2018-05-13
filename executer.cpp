@@ -1,6 +1,6 @@
 #include "lexical.h"
 #include "syntax.h"
-
+#include <cmath>
 extern Table_ident TID;
 
 void Interpretator::interpretation()
@@ -134,12 +134,27 @@ void Executer::execute(Poliz & prog) {
             TID.var[i].set_val(d);
             TID.var[i].assign = true;
             break;
+        case LEX_SIN:
+            lex1 = args.pop();
+            lex1 = to_const(lex1);
+            args.push(sin(lex1.get_val()));
+            break;
+        case LEX_COS:
+            lex1 = args.pop();
+            lex1 = to_const(lex1);
+            args.push(cos(lex1.get_val()));
+            break;
+        case LEX_LOG:
+            lex1 = args.pop();
+            lex1 = to_const(lex1);
+            args.push(log(lex1.get_val()));
+            break;
         default:
             throw "POLIZ: unexpected elem";
         }
         ++index;
     }
-    cout << "Finish of executing!!!" << endl;
+    //cout << "Finish of executing!!!" << endl;
 }
 
 

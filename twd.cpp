@@ -43,6 +43,9 @@ type_lex Scanner::tw[] = {
     LEX_AND,
     LEX_OR,
     LEX_NOT,
+    LEX_SIN,
+    LEX_COS,
+    LEX_LOG,
     LEX_NULL
 };
 
@@ -89,6 +92,9 @@ const string Scanner::TW[] = {
     "and",
     "or",
     "not",
+    "sin",
+    "cos",
+    "ln",
     ""
 };
 
@@ -133,6 +139,9 @@ const string Scanner::LEXS[] = {
     "LEX_SL", // <
     "LEX_SGE", // >=
     "LEX_SLE", // <=
+    "LEX_SIN",
+    "LEX_COS",
+    "LEX_LOG",
     "POLIZ_GO",
     "POLIZ_FGO",
     "POLIZ_LABEL",

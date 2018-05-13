@@ -184,6 +184,7 @@ void Parser::S() {
             else
                 throw curr_l;
     } //end read*/
+
     else
         B();
 }
@@ -255,6 +256,45 @@ void Parser::F() {
             gl();
         else
             throw curr_l;
+    }
+    else if (curr_t == LEX_SIN){
+        gl();
+        if (curr_t == LEX_LPAREN){
+            gl();
+            E();
+            if (curr_t == LEX_RPAREN){
+                gl();
+                prog.put_lex(LEX_SIN);
+            }
+            else
+                throw curr_l;
+        }
+    }
+    else if (curr_t == LEX_COS){
+        gl();
+        if (curr_t == LEX_LPAREN){
+            gl();
+            E();
+            if (curr_t == LEX_RPAREN){
+                gl();
+                prog.put_lex(LEX_COS);
+            }
+            else
+                throw curr_l;
+        }
+    }
+    else if (curr_t == LEX_LOG){
+        gl();
+        if (curr_t == LEX_LPAREN){
+            gl();
+            E();
+            if (curr_t == LEX_RPAREN){
+                gl();
+                prog.put_lex(LEX_LOG);
+            }
+            else
+                throw curr_l;
+        }
     }
     else
         throw curr_l;

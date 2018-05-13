@@ -6,8 +6,9 @@ CONFIG -= qt
 SOURCES += main.cpp \
     twd.cpp \
     lexical.cpp \
-    syntax.cpp \
-    executer.cpp
+    executer.cpp \
+    syntax.cpp
+
 
 HEADERS += \
     lexical.h \
@@ -15,4 +16,4 @@ HEADERS += \
     enum.h
 
 DISTFILES += \
-    file.txt
+    example.txt
