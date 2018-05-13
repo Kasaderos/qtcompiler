@@ -13,6 +13,10 @@ Lex::Lex(type_lex t, double v) {
     v_lex = v;
 }
 
+Lex::Lex(bool b){
+    t_lex = b == true ? LEX_TRUE : LEX_FALSE;
+    v_lex = (int) b;
+}
 Lex::Lex(int i) {
     t_lex = LEX_INUM;
     v_lex = i;
@@ -94,6 +98,7 @@ Scanner::Scanner(const char *filename)
         exit(1);
     }
     ST = H;
+    fp.get(curr_c);
     gc();
 }
 
@@ -103,7 +108,8 @@ Scanner::~Scanner()
 }
 
 void Scanner::gc() {
-    fp.get(c);
+    c = curr_c;
+    fp.get(curr_c);
 }
 
 int Scanner::lookTW() {
@@ -117,6 +123,11 @@ int Scanner::lookTW() {
 }
 
 int Scanner::lookTD() {
+    if (curr_c == '=' &&
+            (c == '<' || c == '>' || c == '=' || c == '!')){
+        buf.push_back(curr_c);
+        gc();
+    }
     int i = 1;
     while (!TD[i].empty()) {
         if (!buf.compare(TD[i]))

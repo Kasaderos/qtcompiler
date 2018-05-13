@@ -15,6 +15,7 @@ public:
     Lex(type_lex t = LEX_NULL, double v = 0);
     Lex(int i);
     Lex(double d);
+    Lex(bool b);
     type_lex get_type() const ;
     void set_type(type_lex t);
     double get_val() const;
@@ -51,7 +52,7 @@ class Scanner
     ifstream fp;
     string buf;
 public:
-    char c;
+    char c, curr_c;
     char minus;
     static type_lex tw[];
     static type_lex td[];

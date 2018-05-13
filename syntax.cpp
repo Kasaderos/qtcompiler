@@ -13,7 +13,7 @@ Poliz::~Poliz() {
 void Poliz::put_lex(Lex l) { p[pos] = l; ++pos; }
 void Poliz::put_lex(Lex l, int place) { p[place] = l; }
 void Poliz::blank() { ++pos; }
-int Poliz::get_pos() { return pos; };
+int Poliz::get_pos() { return pos; }
 
 Lex & Poliz::operator[] (int index)
 {
@@ -127,6 +127,61 @@ void Parser::S() {
                 throw curr_l;
         }
     }
+    else if ( curr_t == LEX_IF ){
+        gl();
+        E();
+        eq_bool();
+        int pl2 = prog.get_pos();
+        prog.blank();
+        prog.put_lex (Lex(POLIZ_FGO));
+        S();
+        int pl3 = prog.get_pos();
+        prog.blank();
+        prog.put_lex (Lex(POLIZ_GO));
+        prog.put_lex (Lex(POLIZ_LABEL, prog.get_pos()),pl2);
+        gl();
+        if ( curr_t == LEX_ELSE ){
+            gl();
+            S();
+            prog.put_lex(Lex(POLIZ_LABEL,prog.get_pos()),pl3);
+        }
+    } //end if
+    else if ( curr_t == LEX_WHILE ){
+        int pl0 = prog.get_pos();
+        gl();
+        E();
+        eq_bool();
+        int pl1 = prog.get_pos();
+        prog.blank();
+        prog.put_lex (Lex(POLIZ_FGO));
+        S();
+        prog.put_lex (Lex (POLIZ_LABEL, pl0));
+        prog.put_lex (Lex (POLIZ_GO));
+        prog.put_lex (Lex(POLIZ_LABEL, prog.get_pos()),pl1);
+        gl();
+        S();
+    } //end while
+    else if ( curr_t == LEX_INPUT ){
+            gl();
+            if ( curr_t == LEX_LPAREN ){
+                gl();
+                if ( curr_t == LEX_ID ){
+                    check_id_in_read();
+                    prog.put_lex (Lex ( POLIZ_ADDRESS, curr_v) );
+                    gl();
+                }
+                else
+                    throw curr_l;
+                if ( curr_t == LEX_RPAREN ){
+                    gl();
+                    prog.put_lex(Lex(LEX_INPUT));
+                }
+                else
+                    throw curr_l;
+            }
+            else
+                throw curr_l;
+    } //end read*/
     else
         B();
 }
@@ -140,6 +195,7 @@ void Parser::E() {
         gl();
         E1();
         check_op();
+
     }
 }
 
@@ -252,7 +308,11 @@ void Parser::check_op()
             st_lex.push(LEX_FLOAT);
         else
             st_lex.push(LEX_INT);
-    }else
+    }else if (oper == LEX_OR || oper == LEX_AND ||
+              oper == LEX_SG || oper == LEX_SL || oper == LEX_SGE ||
+              oper == LEX_SLE || oper == LEX_SEQ || oper == LEX_SNQ)
+        st_lex.push(LEX_BOOL);
+    else
         throw "wrong types are in operation";
      prog.put_lex(op);
 }
@@ -265,6 +325,15 @@ void Parser::check_not ()
         st_lex.push (LEX_BOOL);
 }
 
+void Parser::eq_bool(){
+    if (st_lex.pop().get_type() != LEX_BOOL)
+        throw "expression is not boolean";
+}
+
+void Parser::check_id_in_read(){
+    if (!TID.var[(int)curr_v].declare)
+        throw "not declared";
+}
 
 template <class T, int max_size >
 Stack <T, max_size>::Stack() {

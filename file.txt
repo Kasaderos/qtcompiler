@@ -1,7 +1,4 @@
 int a, b;
-float f;
 {
-    a = 0;
-    a = 500 + 500;
-    print(a);
+
 }

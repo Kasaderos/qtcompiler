@@ -32,6 +32,7 @@ public:
     int get_pos();
     Lex & operator[] (int index);
     void print();
+
 };
 
 class Parser {
@@ -58,6 +59,8 @@ class Parser {
     void check_op();
     void check_not();
     void eq_type();
+    void eq_bool();
+    void check_id_in_read();
 public:
     Poliz prog;
     Parser(const char * program);
